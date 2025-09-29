@@ -5,6 +5,8 @@ context:
   version: "0.6.2"
   rdflib_min: "7.1.4"
   protobuf_min: "6.30.0"
+  # TODO: remove if/when oldest supported is available
+  protobuf_check_min: "6.31.1"
 
 package:
   name: pyjelly
@@ -49,7 +51,7 @@ tests:
         - hypothesis
         - inline-snapshot
         - pip
-        - protobuf ${{ protobuf_min }}.*
+        - protobuf ${{ protobuf_check_min }}.*
         - pytest
         - pytest-mock
         - pytest-subtests
