@@ -2,8 +2,11 @@
 schema_version: 1
 
 context:
-  version: "0.6.1"
+  version: "0.6.2"
   rdflib_min: "7.1.4"
+  protobuf_min: "6.30.0"
+  # TODO: remove if/when oldest supported is available
+  protobuf_check_min: "6.31.1"
 
 package:
   name: pyjelly
@@ -11,7 +14,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/p/pyjelly/pyjelly-${{ version }}.tar.gz
-  sha256: 0cdffac65db173ef4aa091574260e34170b38f2eea251006880493d4f42d18a5
+  sha256: ad7254cc2f0b9d3b9a18059d7096669d86f9510f7bf658f0011ca1ea43bc5f7f
 
 build:
   number: 0
@@ -21,12 +24,12 @@ build:
 
 requirements:
   host:
-    - python ${{ python_min }}.*
     - hatchling
     - pip
+    - python ${{ python_min }}.*
   run:
+    - protobuf >=${{ protobuf_min }}
     - python >=${{ python_min }}
-    - protobuf >=6.30.0
     - typing_extensions >=4.12.2
   run_constraints:
     - rdflib >=${{ rdflib_min }}
@@ -48,6 +51,7 @@ tests:
         - hypothesis
         - inline-snapshot
         - pip
+        - protobuf ${{ protobuf_check_min }}.*
         - pytest
         - pytest-mock
         - pytest-subtests
@@ -66,7 +70,6 @@ about:
     - LICENSE
     - submodules/protobuf/LICENSE
   documentation:  https://jelly-rdf.github.io/pyjelly
-
 
 extra:
   recipe-maintainers:
