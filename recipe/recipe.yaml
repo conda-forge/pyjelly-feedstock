@@ -2,7 +2,7 @@
 schema_version: 1
 
 context:
-  version: "0.6.2"
+  version: "0.7.0"
   rdflib_min: "7.1.4"
   protobuf_min: "6.30.0"
   # TODO: remove if/when oldest supported is available
@@ -14,7 +14,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/p/pyjelly/pyjelly-${{ version }}.tar.gz
-  sha256: ad7254cc2f0b9d3b9a18059d7096669d86f9510f7bf658f0011ca1ea43bc5f7f
+  sha256: adf65e58b81531277edb972ffea17146ef146c24517a22f594d30f9dd9cd6eb6
 
 build:
   number: 0
@@ -69,7 +69,7 @@ about:
   license_file:
     - LICENSE
     - submodules/protobuf/LICENSE
-  documentation:  https://jelly-rdf.github.io/pyjelly
+  documentation: https://jelly-rdf.github.io/pyjelly
 
 extra:
   recipe-maintainers:
