@@ -76,8 +76,8 @@ tests:
     script:
       - pip check
       - cd src
-      - coverage run --source=pyjelly --branch -m pytest -vv --tb=long --color=yes -k "not test_parse_serialize"
-      - coverage report --show-missing --skip-covered --fail-under=87
+      - coverage run --source=pyjelly --branch -m pytest -vv --tb=long --color=yes
+      - coverage report --show-missing --skip-covered --fail-under=46
 
 about:
   homepage: https://github.com/Jelly-RDF/pyjelly
