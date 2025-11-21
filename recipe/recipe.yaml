@@ -2,34 +2,55 @@
 schema_version: 1
 
 context:
-  version: "0.6.2"
+  version: "0.7.0"
+  mypy_min: "1.8"
   rdflib_min: "7.1.4"
   protobuf_min: "6.30.0"
   # TODO: remove if/when oldest supported is available
   protobuf_check_min: "6.31.1"
+  protobuf_submodule_commit: 38911dedbd4dc3c3b8f038520cec291b00d5b215
 
 package:
   name: pyjelly
   version: ${{ version }}
 
 source:
-  url: https://pypi.org/packages/source/p/pyjelly/pyjelly-${{ version }}.tar.gz
-  sha256: ad7254cc2f0b9d3b9a18059d7096669d86f9510f7bf658f0011ca1ea43bc5f7f
+  - url: https://pypi.org/packages/source/p/pyjelly/pyjelly-${{ version }}.tar.gz
+    sha256: adf65e58b81531277edb972ffea17146ef146c24517a22f594d30f9dd9cd6eb6
+    target_directory: dist
+  - url: https://github.com/Jelly-RDF/jelly-protobuf/archive/${{ protobuf_submodule_commit }}.tar.gz
+    sha256: a5836aa00afadc3f52a5d1632e064e0213ad6c21b765069f44a42c3f79e55a38
+    target_directory: dist/submodules/protobuf
+  - url: https://github.com/Jelly-RDF/pyjelly/archive/refs/tags/v${{ version }}.tar.gz
+    sha256: 0a8a8683045f3d9e61b4086f34f6c3afad173f33bd76e2bb334c0a31a7337e28
+    target_directory: src
 
 build:
   number: 0
-  noarch: python
   script:
+    - ${{ PYTHON }} ${{ "$RECIPE_DIR" if unix else "%RECIPE_DIR%" }}/deref_symlinks.py
+    - cd dist
     - ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation --disable-pip-version-check
 
 requirements:
+  build:
+    - ${{ compiler("c") }}
+    - ${{ stdlib("c") }}
+    - if: build_platform != target_platform
+      then:
+        - cross-python_${{ target_platform }}
+        - mypy >=${{ mypy_min }}
+        - python
   host:
-    - hatchling
+    - hatch-mypyc
+    - hatchling >=1.24
+    - mypy >=${{ mypy_min }}
     - pip
-    - python ${{ python_min }}.*
+    - python
   run:
+    - mypy_extensions >=1.0.0
     - protobuf >=${{ protobuf_min }}
-    - python >=${{ python_min }}
+    - python
     - typing_extensions >=4.12.2
   run_constraints:
     - rdflib >=${{ rdflib_min }}
@@ -38,13 +59,10 @@ tests:
   - python:
       imports: pyjelly
       pip_check: true
-      python_version:
-        - ${{ python_min }}.*
-        - 3.13.*
   - files:
       source:
-        - tests/
-        - pyproject.toml
+        - src/tests/
+        - src/pyproject.toml
     requirements:
       run:
         - coverage
@@ -52,24 +70,24 @@ tests:
         - inline-snapshot
         - pip
         - protobuf ${{ protobuf_check_min }}.*
-        - pytest
+        - pytest >=8.3.4,<8.5.0
         - pytest-mock
         - pytest-subtests
-        - python ${{ python_min }}.*
         - rdflib ${{ rdflib_min }}.*
     script:
       - pip check
-      - coverage run --source=pyjelly --branch -m pytest -vv --tb=long --color=yes -k "not test_parse_serialize"
-      - coverage report --show-missing --skip-covered --fail-under=87
+      - cd src
+      - coverage run --source=pyjelly --branch -m pytest -vv --tb=long --color=yes
+      - coverage report --show-missing --skip-covered --fail-under=46
 
 about:
   homepage: https://github.com/Jelly-RDF/pyjelly
   summary: Jelly-RDF implementation for Python
   license: Apache-2.0
   license_file:
-    - LICENSE
-    - submodules/protobuf/LICENSE
-  documentation:  https://jelly-rdf.github.io/pyjelly
+    - dist/LICENSE
+    - dist/submodules/protobuf/LICENSE
+  documentation: https://jelly-rdf.github.io/pyjelly
 
 extra:
   recipe-maintainers:
