@@ -18,19 +18,24 @@ source:
 
 build:
   number: 0
-  noarch: python
   script:
     - ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation --disable-pip-version-check
 
 requirements:
+  build:
+    - ${{ compiler("c") }}
+    - ${{ stdlib("c") }}
   host:
-    - hatchling
+    - hatch-mypyc
+    - hatchling >=1.24
+    - mypy >=1.8
     - pip
-    - python ${{ python_min }}.*
+    - python
   run:
     - protobuf >=${{ protobuf_min }}
     - python >=${{ python_min }}
     - typing_extensions >=4.12.2
+    - mypy-extensions>=1.0.0
   run_constraints:
     - rdflib >=${{ rdflib_min }}
 
@@ -38,9 +43,6 @@ tests:
   - python:
       imports: pyjelly
       pip_check: true
-      python_version:
-        - ${{ python_min }}.*
-        - 3.13.*
   - files:
       source:
         - tests/
@@ -52,10 +54,9 @@ tests:
         - inline-snapshot
         - pip
         - protobuf ${{ protobuf_check_min }}.*
-        - pytest
+        - pytest >=8.3.4,<8.5.0
         - pytest-mock
         - pytest-subtests
-        - python ${{ python_min }}.*
         - rdflib ${{ rdflib_min }}.*
     script:
       - pip check
