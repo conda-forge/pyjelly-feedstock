@@ -28,6 +28,7 @@ source:
 build:
   number: 0
   script:
+    - ${{ PYTHON }} ${{ "$RECIPE_DIR" if unix else "%RECIPE_DIR%" }}/deref_symlinks.py
     - cd dist
     - ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation --disable-pip-version-check
 
