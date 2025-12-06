@@ -2,7 +2,7 @@
 schema_version: 1
 
 context:
-  version: "0.7.0"
+  version: "0.7.1"
   mypy_min: "1.8"
   rdflib_min: "7.1.4"
   protobuf_min: "6.30.0"
@@ -16,13 +16,13 @@ package:
 
 source:
   - url: https://pypi.org/packages/source/p/pyjelly/pyjelly-${{ version }}.tar.gz
-    sha256: adf65e58b81531277edb972ffea17146ef146c24517a22f594d30f9dd9cd6eb6
+    sha256: 09131e4dc9fc0b3f2870bcb2c871922e46788d6bb577e2709ce1a45a0051e352
     target_directory: dist
   - url: https://github.com/Jelly-RDF/jelly-protobuf/archive/${{ protobuf_submodule_commit }}.tar.gz
     sha256: a5836aa00afadc3f52a5d1632e064e0213ad6c21b765069f44a42c3f79e55a38
     target_directory: dist/submodules/protobuf
   - url: https://github.com/Jelly-RDF/pyjelly/archive/refs/tags/v${{ version }}.tar.gz
-    sha256: 0a8a8683045f3d9e61b4086f34f6c3afad173f33bd76e2bb334c0a31a7337e28
+    sha256: 92f844daf94f447c26a4531bf85fe45dcc41174c1f476edecdad4a8e2907c1b6
     target_directory: src
 
 build:
