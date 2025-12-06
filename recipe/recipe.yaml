@@ -4,6 +4,7 @@ schema_version: 1
 context:
   version: "0.7.1"
   mypy_min: "1.8"
+  mypy_not: "1.19"
   rdflib_min: "7.1.4"
   protobuf_min: "6.30.0"
   # TODO: remove if/when oldest supported is available
@@ -39,12 +40,12 @@ requirements:
     - if: build_platform != target_platform
       then:
         - cross-python_${{ target_platform }}
-        - mypy >=${{ mypy_min }}
+        - mypy >=${{ mypy_min }},!=${{ mypy_not }}
         - python
   host:
     - hatch-mypyc
     - hatchling >=1.24
-    - mypy >=${{ mypy_min }}
+    - mypy >=${{ mypy_min }},!=${{ mypy_not }}
     - pip
     - python
   run:
