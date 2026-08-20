@@ -16,7 +16,7 @@ package:
 
 source:
   - url: https://pypi.org/packages/source/p/pyjelly/pyjelly-${{ version }}.tar.gz
-    sha256: bb04fee11ef602b4b8a1434562a3db647e68287178a3c2e1e43c2f5d333f1029
+    sha256: 5b758a531619e5617f181477058ca84e1791eb02e4347bc28712d257186a7a9f
     target_directory: dist
   - url: https://github.com/Jelly-RDF/jelly-protobuf/archive/31e63ebf4bcf53e5cef852fa6dde25b76dcf6c56.tar.gz
     sha256: 03a19f270da9e5162a4aa595e5c1ca0ab3d73b064a3cf8f013e1cfcea113bf40
