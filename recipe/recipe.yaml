@@ -2,8 +2,8 @@
 schema_version: 1
 
 context:
-  version: "0.8.1"
-  mypy_min: "1.8"
+  version: "0.8.2"
+  mypy_min: "2.4"
   mypy_not: "1.19"
   rdflib_min: "7.1.4"
   protobuf_min: "6.30.0"
@@ -16,13 +16,15 @@ package:
 
 source:
   - url: https://pypi.org/packages/source/p/pyjelly/pyjelly-${{ version }}.tar.gz
-    sha256: 5b758a531619e5617f181477058ca84e1791eb02e4347bc28712d257186a7a9f
+    sha256: 94b3d701b38306d15420aa8c5e34abfab18a9a4cb9139ba3144d98f4e99b61a6
     target_directory: dist
-  - url: https://github.com/Jelly-RDF/jelly-protobuf/archive/31e63ebf4bcf53e5cef852fa6dde25b76dcf6c56.tar.gz
-    sha256: 03a19f270da9e5162a4aa595e5c1ca0ab3d73b064a3cf8f013e1cfcea113bf40
-    target_directory: dist/submodules/protobuf  # (v1.1.3-9-g31e63eb)
+
+  - url: https://github.com/Jelly-RDF/jelly-protobuf/archive/d1d3088274be36d761617a1228a83d5b697831d6.tar.gz
+    sha256: cd7db0e87c52732390a4f87e913b0326c7f6615dc224f2159643543c542d1b59
+    target_directory: dist/submodules/protobuf  # (v1.1.3-10-gd1d3088)
+
   - url: https://github.com/Jelly-RDF/pyjelly/archive/refs/tags/v${{ version }}.tar.gz
-    sha256: dc413bcdbe81fbc93712573001ab1fdbdf9d2ea4def7d4d6bf4652edd62e7b27
+    sha256: 602197710896355454b5fe40b000e1966254124b3848bc3f3bb703fa1cca5391
     target_directory: src
 
 build:
@@ -30,7 +32,7 @@ build:
   script:
     - ${{ PYTHON }} ${{ "$RECIPE_DIR" if unix else "%RECIPE_DIR%" }}/deref_symlinks.py
     - cd dist
-    - ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation --disable-pip-version-check
+    - ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation --disable-pip-version-check --check-build-dependencies
 
 requirements:
   build:
@@ -56,6 +58,15 @@ requirements:
     - rdflib >=${{ rdflib_min }}
 
 tests:
+  - package_contents:
+      # strict: true
+      #     error Package content test failed:
+      #     error - No match for files glob: lib/python-3.15/site-packages/*__mypyc.*.so
+      #     error
+      #     error Strict mode violations:
+      #     error - lib/python3.15/site-packages/cb523b6bada1c6eba8b4__mypyc.cpython-315-x86_64-linux-gnu.so
+      site_packages:
+        - pyjelly-${{ version }}.dist-info/**
   - python:
       imports: pyjelly
       pip_check: true
@@ -69,7 +80,7 @@ tests:
         - hypothesis
         - inline-snapshot
         - pip
-        - protobuf ${{ protobuf_check_min }}.*
+        - protobuf ${{ protobuf_check_min ~ "." if match(python, "<3.15") }}*
         - pytest >=8.3.4,<9.2.0
         - pytest-mock
         - pytest-subtests
