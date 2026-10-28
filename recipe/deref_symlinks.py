@@ -12,6 +12,7 @@ DIST = SRC_DIR / "dist"
 KNOWN_SYMLINKS = {
     SRC / "tests/conformance_tests/grpc": DIST / "submodules/protobuf/test/grpc",
     SRC / "tests/conformance_tests/rdf": DIST / "submodules/protobuf/test/rdf",
+    SRC / "tests/conformance_tests/sparql": DIST / "submodules/protobuf/test/sparql",
 }
 
 

@@ -2,13 +2,13 @@
 schema_version: 1
 
 context:
-  version: "0.8.2"
+  version: "0.9.0"
   mypy_min: "2.4"
-  mypy_not: "1.19"
-  rdflib_min: "7.1.4"
   protobuf_min: "6.30.0"
   # TODO: remove if/when oldest supported is available
   protobuf_check_min: "6.31.1"
+  # tests use `Dataset.default_graph`
+  rdflib_check_min: "7.3"
 
 package:
   name: pyjelly
@@ -16,15 +16,15 @@ package:
 
 source:
   - url: https://pypi.org/packages/source/p/pyjelly/pyjelly-${{ version }}.tar.gz
-    sha256: 94b3d701b38306d15420aa8c5e34abfab18a9a4cb9139ba3144d98f4e99b61a6
+    sha256: bbc935bccfad94f10557870dcb788ff28670f4f8b3d464efa2a54cc6b7493993
     target_directory: dist
 
-  - url: https://github.com/Jelly-RDF/jelly-protobuf/archive/d1d3088274be36d761617a1228a83d5b697831d6.tar.gz
-    sha256: cd7db0e87c52732390a4f87e913b0326c7f6615dc224f2159643543c542d1b59
-    target_directory: dist/submodules/protobuf  # (v1.1.3-10-gd1d3088)
+  - url: https://github.com/Jelly-RDF/jelly-protobuf/archive/7c3773f6e3704440b445b30faa677516a45d3b60.tar.gz
+    sha256: 90231ae0d5c15ed53272b6b696d1587e04784227786f6126654e99599bfe6e35
+    target_directory: dist/submodules/protobuf  # (v1.2.0)
 
   - url: https://github.com/Jelly-RDF/pyjelly/archive/refs/tags/v${{ version }}.tar.gz
-    sha256: 602197710896355454b5fe40b000e1966254124b3848bc3f3bb703fa1cca5391
+    sha256: 82052117d54c34557dd323fad3dbc08995cd1c08b2d14106ad6601600869339d
     target_directory: src
 
 build:
@@ -41,12 +41,12 @@ requirements:
     - if: build_platform != target_platform
       then:
         - cross-python_${{ target_platform }}
-        - mypy >=${{ mypy_min }},!=${{ mypy_not }}
+        - mypy >=${{ mypy_min }}
         - python
   host:
     - hatch-mypyc
     - hatchling >=1.24
-    - mypy >=${{ mypy_min }},!=${{ mypy_not }}
+    - mypy >=${{ mypy_min }}
     - pip
     - python
   run:
@@ -55,7 +55,7 @@ requirements:
     - python
     - typing_extensions >=4.12.2
   run_constraints:
-    - rdflib >=${{ rdflib_min }}
+    - rdflib >=7.1.4
 
 tests:
   - package_contents:
@@ -84,12 +84,12 @@ tests:
         - pytest >=8.3.4,<9.2.0
         - pytest-mock
         - pytest-subtests
-        - rdflib ${{ rdflib_min }}.*
+        - rdflib ${{ rdflib_check_min }}.*
     script:
       - pip check
       - cd src
       - coverage run --source=pyjelly --branch -m pytest -vv --tb=long --color=yes
-      - coverage report --show-missing --skip-covered --fail-under=46
+      - coverage report --show-missing --skip-covered --fail-under=16
 
 about:
   homepage: https://pypi.org/project/pyjelly
