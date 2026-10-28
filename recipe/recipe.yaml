@@ -4,11 +4,11 @@ schema_version: 1
 context:
   version: "0.9.0"
   mypy_min: "2.4"
-  mypy_not: "1.19"
-  rdflib_min: "7.1.4"
   protobuf_min: "6.30.0"
   # TODO: remove if/when oldest supported is available
   protobuf_check_min: "6.31.1"
+  # tests use `Dataset.default_graph`
+  rdflib_check_min: "7.3"
 
 package:
   name: pyjelly
@@ -41,12 +41,12 @@ requirements:
     - if: build_platform != target_platform
       then:
         - cross-python_${{ target_platform }}
-        - mypy >=${{ mypy_min }},!=${{ mypy_not }}
+        - mypy >=${{ mypy_min }}
         - python
   host:
     - hatch-mypyc
     - hatchling >=1.24
-    - mypy >=${{ mypy_min }},!=${{ mypy_not }}
+    - mypy >=${{ mypy_min }}
     - pip
     - python
   run:
@@ -55,7 +55,7 @@ requirements:
     - python
     - typing_extensions >=4.12.2
   run_constraints:
-    - rdflib >=${{ rdflib_min }}
+    - rdflib >=7.1.4
 
 tests:
   - package_contents:
@@ -84,7 +84,7 @@ tests:
         - pytest >=8.3.4,<9.2.0
         - pytest-mock
         - pytest-subtests
-        - rdflib ${{ rdflib_min }}.*
+        - rdflib ${{ rdflib_check_min }}.*
     script:
       - pip check
       - cd src
