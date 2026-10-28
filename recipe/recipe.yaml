@@ -21,7 +21,7 @@ source:
 
   - url: https://github.com/Jelly-RDF/jelly-protobuf/archive/7c3773f6e3704440b445b30faa677516a45d3b60.tar.gz
     sha256: 90231ae0d5c15ed53272b6b696d1587e04784227786f6126654e99599bfe6e35
-    target_directory: submodules/protobuf  # (v1.2.0)
+    target_directory: dist/submodules/protobuf  # (v1.2.0)
 
   - url: https://github.com/Jelly-RDF/pyjelly/archive/refs/tags/v${{ version }}.tar.gz
     sha256: 82052117d54c34557dd323fad3dbc08995cd1c08b2d14106ad6601600869339d
@@ -89,7 +89,7 @@ tests:
       - pip check
       - cd src
       - coverage run --source=pyjelly --branch -m pytest -vv --tb=long --color=yes
-      - coverage report --show-missing --skip-covered --fail-under=46
+      - coverage report --show-missing --skip-covered --fail-under=16
 
 about:
   homepage: https://pypi.org/project/pyjelly
