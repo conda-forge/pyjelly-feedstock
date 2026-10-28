@@ -19,9 +19,9 @@ source:
     sha256: bbc935bccfad94f10557870dcb788ff28670f4f8b3d464efa2a54cc6b7493993
     target_directory: dist
 
-  - url: https://github.com/Jelly-RDF/jelly-protobuf/archive/d1d3088274be36d761617a1228a83d5b697831d6.tar.gz
-    sha256: cd7db0e87c52732390a4f87e913b0326c7f6615dc224f2159643543c542d1b59
-    target_directory: dist/submodules/protobuf  # (v1.1.3-10-gd1d3088)
+  - url: https://github.com/Jelly-RDF/jelly-protobuf/archive/7c3773f6e3704440b445b30faa677516a45d3b60.tar.gz
+    sha256: 90231ae0d5c15ed53272b6b696d1587e04784227786f6126654e99599bfe6e35
+    target_directory: submodules/protobuf  # (v1.2.0)
 
   - url: https://github.com/Jelly-RDF/pyjelly/archive/refs/tags/v${{ version }}.tar.gz
     sha256: 82052117d54c34557dd323fad3dbc08995cd1c08b2d14106ad6601600869339d
