@@ -15,7 +15,7 @@ package:
   version: ${{ version }}
 
 source:
-  - url: https://pypi.org/packages/source/p/pyjelly/pyjelly-${{ version }}.tar.gz
+  - url: https://files.pythonhosted.org/packages/source/p/pyjelly/pyjelly-${{ version }}.tar.gz
     sha256: cbac6f704c7e985346a84f5401921be0a8bc90f5c2f4511af3663696ec795cb2
     target_directory: dist
 
