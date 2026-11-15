@@ -2,7 +2,7 @@
 schema_version: 1
 
 context:
-  version: "0.9.0"
+  version: "0.9.1"
   mypy_min: "2.4"
   protobuf_min: "6.30.0"
   # TODO: remove if/when oldest supported is available
@@ -16,7 +16,7 @@ package:
 
 source:
   - url: https://pypi.org/packages/source/p/pyjelly/pyjelly-${{ version }}.tar.gz
-    sha256: bbc935bccfad94f10557870dcb788ff28670f4f8b3d464efa2a54cc6b7493993
+    sha256: cbac6f704c7e985346a84f5401921be0a8bc90f5c2f4511af3663696ec795cb2
     target_directory: dist
 
   - url: https://github.com/Jelly-RDF/jelly-protobuf/archive/7c3773f6e3704440b445b30faa677516a45d3b60.tar.gz
@@ -24,7 +24,7 @@ source:
     target_directory: dist/submodules/protobuf  # (v1.2.0)
 
   - url: https://github.com/Jelly-RDF/pyjelly/archive/refs/tags/v${{ version }}.tar.gz
-    sha256: 82052117d54c34557dd323fad3dbc08995cd1c08b2d14106ad6601600869339d
+    sha256: 1080323f5f0333cb0c69a325e366d7b116f2bbb87b902f5fa5ec50ae1c78232b
     target_directory: src
 
 build:
